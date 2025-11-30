@@ -1,5 +1,6 @@
 package de.phl.programmingproject.enrollmentsystem;
 
+// Represents the enrollment of a student in a course with a grade
 public class Enrollment {
     private final Student student;
     private final Course course;

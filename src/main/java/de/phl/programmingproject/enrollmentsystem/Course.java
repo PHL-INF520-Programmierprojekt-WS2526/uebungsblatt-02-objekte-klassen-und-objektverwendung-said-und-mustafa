@@ -3,6 +3,7 @@ package de.phl.programmingproject.enrollmentsystem;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a course with enrolled students
 public class Course {
     private final String name;
     private final List<Student> students = new ArrayList<>();
@@ -19,24 +20,21 @@ public class Course {
         return name;
     }
 
-    // Sadece Student.enroll'dan çağrılmalı
-    protected void addStudent(Student student) {
+    // Enrolls a student in this course
+    public void enroll(final Student student) {
         if (!students.contains(student)) {
             students.add(student);
+            // Student also manages its own enrollments (creates Enrollment obj)
+            student.addEnrollment(this);
         }
     }
 
-    protected void removeStudent(Student student) {
-        students.remove(student);
-    }
-
-    public void enroll(final Student student) {
-        // Ana ilişkiyi Student tarafında başlat
-        student.enroll(this);
-    }
-
+    // Drops a student from this course
     public void drop(final Student student) {
-        student.drop(this);
+        if (students.contains(student)) {
+            students.remove(student);
+            student.removeEnrollment(this);
+        }
     }
 
     public boolean isStudentEnrolled(final Student student) {

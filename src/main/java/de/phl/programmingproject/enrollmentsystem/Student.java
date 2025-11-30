@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 
+// Represents a student with a set of enrollments
 public class Student {
     private final String name;
     private final String id;
@@ -23,18 +24,26 @@ public class Student {
         return name;
     }
 
+    // Enroll in a course using Course.enroll(this) to keep lists in sync
     public void enroll(final Course course) {
+        course.enroll(this);
+    }
+
+    // Drop a course using Course.drop(this)
+    public void drop(final Course course) {
+        course.drop(this);
+    }
+
+    // Adds an Enrollment (called by Course.enroll)
+    protected void addEnrollment(Course course) {
         if (!isEnrolledIn(course)) {
-            Enrollment enrollment = new Enrollment(this, course);
-            enrollments.add(enrollment);
-            // Sadece course'a ekle
-            course.addStudent(this);
+            enrollments.add(new Enrollment(this, course));
         }
     }
 
-    public void drop(final Course course) {
+    // Removes an Enrollment (called by Course.drop)
+    protected void removeEnrollment(Course course) {
         enrollments.removeIf(e -> e.getCourse().equals(course));
-        course.removeStudent(this);
     }
 
     public boolean isEnrolledIn(final Course course) {
