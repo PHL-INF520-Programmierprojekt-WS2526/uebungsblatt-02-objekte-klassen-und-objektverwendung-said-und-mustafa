@@ -3,9 +3,8 @@ package de.phl.programmingproject.enrollmentsystem;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
-// Repräsentiert einen Studenten mit seinen Einschreibungen
 public class Student {
     private final String name;
     private final String id;
@@ -25,15 +24,21 @@ public class Student {
     }
 
     public void enroll(final Course course) {
-        // Doppeltes Einschreiben verhindern
-        if (enrollments.stream().noneMatch(e -> e.getCourse().equals(course))) {
+        // Eğer zaten kayıtlıysa tekrar ekleme!
+        if (!isEnrolledIn(course)) {
             Enrollment enrollment = new Enrollment(this, course);
             enrollments.add(enrollment);
+            if (!course.isStudentEnrolled(this)) {
+                course.enroll(this);
+            }
         }
     }
 
     public void drop(final Course course) {
         enrollments.removeIf(e -> e.getCourse().equals(course));
+        if (course.isStudentEnrolled(this)) {
+            course.drop(this);
+        }
     }
 
     public boolean isEnrolledIn(final Course course) {
@@ -41,7 +46,11 @@ public class Student {
     }
 
     public List<Course> getCourses() {
-        return enrollments.stream().map(Enrollment::getCourse).collect(Collectors.toList());
+        List<Course> courses = new ArrayList<>();
+        for (Enrollment e : enrollments) {
+            courses.add(e.getCourse());
+        }
+        return courses;
     }
 
     public Set<Enrollment> getEnrollments() {

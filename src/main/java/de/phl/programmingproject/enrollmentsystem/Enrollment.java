@@ -1,6 +1,5 @@
 package de.phl.programmingproject.enrollmentsystem;
 
-// Repräsentiert die Einschreibung eines Studenten in einen Kurs mit Note
 public class Enrollment {
     private final Student student;
     private final Course course;
@@ -9,11 +8,11 @@ public class Enrollment {
     public Enrollment(Student student, Course course) {
         this.student = student;
         this.course = course;
-        this.grade = 0.0; // Standardwert
+        this.grade = 0.0;
     }
 
     public String getInfo() {
-        return "Student: " + student.getName() + ", Kurs: " + course.getName() + ", Note: " + grade;
+        return "Student: " + student.getName() + ", Course: " + course.getName() + ", Grade: " + grade;
     }
 
     public void setGrade(final double grade) {
