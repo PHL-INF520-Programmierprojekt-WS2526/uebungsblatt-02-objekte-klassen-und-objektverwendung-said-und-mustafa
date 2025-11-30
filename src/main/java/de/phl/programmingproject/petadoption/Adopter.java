@@ -12,7 +12,7 @@ public class Adopter {
     }
 
     public String getInfo() {
-        return "Name: " + name + ", Telefon: " + phone + ", E-Mail: " + email;
+        return "Name: " + name + ", Phone: " + phone + ", Email: " + email;
     }
 
     public String getName() {

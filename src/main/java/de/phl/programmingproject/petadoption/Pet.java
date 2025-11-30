@@ -6,19 +6,17 @@ public class Pet {
     private String name;
     private int age;
     private String breed;
-    private boolean adopted;
-    private Adoption adoption;
+    private boolean adopted = false;
+    private Adoption adoption = null;
 
     public Pet(final String name, final int age, final String breed) {
         this.name = name;
         this.age = age;
         this.breed = breed;
-        this.adopted = false;
-        this.adoption = null;
     }
 
     public String getInfo() {
-        return "Name: " + name + ", Alter: " + age + ", Rasse: " + breed;
+        return "Name: " + name + ", Age: " + age + ", Breed: " + breed;
     }
 
     public boolean isAdopted() {

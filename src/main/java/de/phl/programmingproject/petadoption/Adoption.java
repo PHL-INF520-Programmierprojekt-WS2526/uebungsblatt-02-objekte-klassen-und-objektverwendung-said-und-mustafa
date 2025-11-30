@@ -16,6 +16,6 @@ public class Adoption {
 
     public String getInfo() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        return "Haustier: " + pet.getName() + ", Adoptierende: " + adopter.getName() + ", Datum: " + sdf.format(date);
+        return "Pet: " + pet.getName() + ", Adopter: " + adopter.getName() + ", Date: " + sdf.format(date);
     }
 }
