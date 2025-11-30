@@ -20,8 +20,10 @@ public class Course {
     }
 
     public void enroll(final Student student) {
+        // Sadece yeni ise ekle
         if (!students.contains(student)) {
             students.add(student);
+            // Student nesnesinde enrollment ekle
             if (!student.isEnrolledIn(this)) {
                 student.enroll(this);
             }

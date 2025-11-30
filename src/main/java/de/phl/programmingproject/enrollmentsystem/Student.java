@@ -24,7 +24,6 @@ public class Student {
     }
 
     public void enroll(final Course course) {
-        // Eğer zaten kayıtlıysa tekrar ekleme!
         if (!isEnrolledIn(course)) {
             Enrollment enrollment = new Enrollment(this, course);
             enrollments.add(enrollment);
