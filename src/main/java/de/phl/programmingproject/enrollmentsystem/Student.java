@@ -27,17 +27,14 @@ public class Student {
         if (!isEnrolledIn(course)) {
             Enrollment enrollment = new Enrollment(this, course);
             enrollments.add(enrollment);
-            if (!course.isStudentEnrolled(this)) {
-                course.enroll(this);
-            }
+            // Sadece course'a ekle
+            course.addStudent(this);
         }
     }
 
     public void drop(final Course course) {
         enrollments.removeIf(e -> e.getCourse().equals(course));
-        if (course.isStudentEnrolled(this)) {
-            course.drop(this);
-        }
+        course.removeStudent(this);
     }
 
     public boolean isEnrolledIn(final Course course) {

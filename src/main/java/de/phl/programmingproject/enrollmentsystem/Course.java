@@ -19,24 +19,24 @@ public class Course {
         return name;
     }
 
-    public void enroll(final Student student) {
-        // Sadece yeni ise ekle
+    // Sadece Student.enroll'dan çağrılmalı
+    protected void addStudent(Student student) {
         if (!students.contains(student)) {
             students.add(student);
-            // Student nesnesinde enrollment ekle
-            if (!student.isEnrolledIn(this)) {
-                student.enroll(this);
-            }
         }
     }
 
+    protected void removeStudent(Student student) {
+        students.remove(student);
+    }
+
+    public void enroll(final Student student) {
+        // Ana ilişkiyi Student tarafında başlat
+        student.enroll(this);
+    }
+
     public void drop(final Student student) {
-        if (students.contains(student)) {
-            students.remove(student);
-            if (student.isEnrolledIn(this)) {
-                student.drop(this);
-            }
-        }
+        student.drop(this);
     }
 
     public boolean isStudentEnrolled(final Student student) {
