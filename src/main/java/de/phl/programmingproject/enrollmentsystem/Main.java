@@ -1,10 +1,66 @@
 package de.phl.programmingproject.enrollmentsystem;
 
-/**
- * PUT YOUR CODE FOR THE EXERCISE 'STUDENT ENROLLMENT SYSTEM' IN THIS CLASS
- */
 public class Main {
     public static void main(String[] args) {
-        // TODO: implement your program here.
+        // 1. Student erstellen
+        Student student = new Student("John Doe", "12345");
+
+        // 2. Kurs erstellen
+        Course course1 = new Course("Introduction to Computer Science");
+
+        // 3. Infos ausgeben
+        System.out.println(student.getInfo());
+        System.out.println(course1.getInfo());
+
+        // 4. Student in Kurs einschreiben und Enrollment speichern
+        student.enroll(course1);
+
+        // Enrollment-Objekt finden
+        Enrollment enrollment1 = student.getEnrollments().stream()
+                .filter(e -> e.getCourse().equals(course1))
+                .findFirst().orElse(null);
+
+        // 5. Infos nach Einschreibung ausgeben
+        System.out.println(student.getInfo());
+        System.out.println(course1.getInfo());
+
+        // 6. Enrollment-Info ausgeben
+        if (enrollment1 != null)
+            System.out.println(enrollment1.getInfo());
+
+        // 7. Note setzen
+        if (enrollment1 != null)
+            enrollment1.setGrade(4.0);
+
+        // 8. Enrollment-Info erneut ausgeben
+        if (enrollment1 != null)
+            System.out.println(enrollment1.getInfo());
+
+        // 9. Weiteren Kurs erstellen
+        Course course2 = new Course("Object-Oriented Programming");
+
+        // 10. Student in neuen Kurs einschreiben
+        student.enroll(course2);
+
+        // 11. Liste der Kurse, in die der Student eingeschrieben ist
+        System.out.println("Eingeschriebene Kurse des Studenten:");
+        for (Course c : student.getCourses()) {
+            System.out.println(c.getInfo());
+        }
+
+        // 12. Liste der Studenten im ersten Kurs
+        System.out.println("Studenten im Kurs '" + course1.getName() + "':");
+        for (Student s : course1.getStudents()) {
+            System.out.println(s.getInfo());
+        }
+
+        // 13. Student aus erstem Kurs austragen
+        student.drop(course1);
+
+        // 14. Liste der Studenten im ersten Kurs nach Austragung
+        System.out.println("Studenten im Kurs '" + course1.getName() + "' nach dem Austragen:");
+        for (Student s : course1.getStudents()) {
+            System.out.println(s.getInfo());
+        }
     }
 }
