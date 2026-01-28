@@ -19,21 +19,21 @@ public class Course {
         return name;
     }
 
-    // Called only by Student.enroll
+    // Only called from Student.enroll
     protected void addStudent(Student student) {
         if (!students.contains(student)) {
             students.add(student);
         }
     }
 
-    // Called only by Student.drop
+    // Only called from Student.drop
     protected void removeStudent(Student student) {
         students.remove(student);
     }
 
-    // Course enroll just delegates to Student.enroll
-    public void enroll(final Student student) {
-        student.enroll(this);
+    // Course enroll delegates to Student.enroll
+    public Enrollment enroll(final Student student) {
+        return student.enroll(this);
     }
 
     public void drop(final Student student) {

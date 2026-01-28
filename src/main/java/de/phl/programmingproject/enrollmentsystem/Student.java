@@ -23,18 +23,28 @@ public class Student {
         return name;
     }
 
-    // Student enrolls in a course
-    public void enroll(final Course course) {
-        if (!isEnrolledIn(course)) {
-            enrollments.add(new Enrollment(this, course));
-            course.addStudent(this); // Only add student to course list
-        }
+    public String getId() {
+        return id;
     }
 
-    // Student drops a course
-    public void drop(final Course course) {
+    public Enrollment enroll(final Course course) {
+        if (!isEnrolledIn(course)) {
+            Enrollment enrollment = new Enrollment(this, course);
+            enrollments.add(enrollment);
+            course.addStudent(this);
+            return enrollment;
+        }
+        for (Enrollment e : enrollments) {
+            if (e.getCourse().equals(course)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+        public void drop(final Course course) {
         enrollments.removeIf(e -> e.getCourse().equals(course));
-        course.removeStudent(this); // Only remove student from course list
+        course.removeStudent(this);
     }
 
     public boolean isEnrolledIn(final Course course) {
@@ -50,6 +60,6 @@ public class Student {
     }
 
     public Set<Enrollment> getEnrollments() {
-        return enrollments;
+        return new HashSet<>(enrollments); 
     }
 }

@@ -8,11 +8,7 @@ public class Main {
         System.out.println(student.getInfo());
         System.out.println(course1.getInfo());
 
-        student.enroll(course1);
-
-        Enrollment enrollment1 = student.getEnrollments().stream()
-                .filter(e -> e.getCourse().equals(course1))
-                .findFirst().orElse(null);
+        Enrollment enrollment1 = student.enroll(course1);
 
         System.out.println(student.getInfo());
         System.out.println(course1.getInfo());
