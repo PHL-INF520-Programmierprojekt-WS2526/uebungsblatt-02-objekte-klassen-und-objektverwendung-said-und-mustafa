@@ -2,10 +2,11 @@ package de.phl.programmingproject.enrollmentsystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Course {
     private final String name;
-    private final List<Student> students = new ArrayList<>();
+    private final List<Enrollment> enrollments = new ArrayList<>();
 
     public Course(String name) {
         this.name = name;
@@ -19,19 +20,17 @@ public class Course {
         return name;
     }
 
-    // Only called from Student.enroll
-    protected void addStudent(Student student) {
-        if (!students.contains(student)) {
-            students.add(student);
+    // Enrollment eklenince öğrenci de eklenmiş olur
+    protected void addEnrollment(Enrollment enrollment) {
+        if (!enrollments.contains(enrollment)) {
+            enrollments.add(enrollment);
         }
     }
 
-    // Only called from Student.drop
-    protected void removeStudent(Student student) {
-        students.remove(student);
+    protected void removeEnrollment(Enrollment enrollment) {
+        enrollments.remove(enrollment);
     }
 
-    // Course enroll delegates to Student.enroll
     public Enrollment enroll(final Student student) {
         return student.enroll(this);
     }
@@ -41,10 +40,31 @@ public class Course {
     }
 
     public boolean isStudentEnrolled(final Student student) {
-        return students.contains(student);
+        return enrollments.stream().anyMatch(e -> e.getStudent().equals(student));
     }
 
     public List<Student> getStudents() {
-        return new ArrayList<>(students);
+        List<Student> students = new ArrayList<>();
+        for (Enrollment e : enrollments) {
+            students.add(e.getStudent());
+        }
+        return students;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return new ArrayList<>(enrollments);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+        Course course = (Course) o;
+        return Objects.equals(name, course.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

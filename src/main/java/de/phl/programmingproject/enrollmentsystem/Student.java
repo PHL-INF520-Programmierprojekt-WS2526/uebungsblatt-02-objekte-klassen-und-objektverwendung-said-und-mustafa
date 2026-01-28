@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Student {
     private final String name;
@@ -27,11 +28,12 @@ public class Student {
         return id;
     }
 
+    // Student enrolls in a course
     public Enrollment enroll(final Course course) {
         if (!isEnrolledIn(course)) {
             Enrollment enrollment = new Enrollment(this, course);
             enrollments.add(enrollment);
-            course.addStudent(this);
+            course.addEnrollment(enrollment);
             return enrollment;
         }
         for (Enrollment e : enrollments) {
@@ -42,9 +44,19 @@ public class Student {
         return null;
     }
 
-        public void drop(final Course course) {
-        enrollments.removeIf(e -> e.getCourse().equals(course));
-        course.removeStudent(this);
+    // Student drops a course
+    public void drop(final Course course) {
+        Enrollment toRemove = null;
+        for (Enrollment e : enrollments) {
+            if (e.getCourse().equals(course)) {
+                toRemove = e;
+                break;
+            }
+        }
+        if (toRemove != null) {
+            enrollments.remove(toRemove);
+            course.removeEnrollment(toRemove);
+        }
     }
 
     public boolean isEnrolledIn(final Course course) {
@@ -60,6 +72,19 @@ public class Student {
     }
 
     public Set<Enrollment> getEnrollments() {
-        return new HashSet<>(enrollments); 
+        return new HashSet<>(enrollments);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return Objects.equals(id, student.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
